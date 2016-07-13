@@ -1,14 +1,5 @@
 package com.ernstthuer;
-import java.io.ObjectInput;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.channels.ByteChannel;
-import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sourceforge.argparse4j.ArgumentParsers;
@@ -22,7 +13,7 @@ import net.sourceforge.argparse4j.inf.Namespace;
  */
 public class ArgParse {
     public static ArgumentParser parser = ArgumentParsers.newArgumentParser("Checksum").defaultHelp(true).description("ACEcalc");
-    public static List<File> fileList;
+    public static List<FileHandler> fileList = new ArrayList<>();
 
     public ArgParse(String[] args) {
 
@@ -40,7 +31,7 @@ public class ArgParse {
 
 
         Namespace ns = null;
-        System.out.println("Creating namespace");
+
 
         try {
             ns = parser.parseArgs(args);
@@ -52,14 +43,22 @@ public class ArgParse {
         System.out.println(ns);
 
         for(Object element : ns.getList("bamInput")){
-            System.out.println(element);
-            File bamFile = new File((String)element,"Bam","Input");
-            fileList.add(bamFile);
+            try {
+                //System.out.println(element);
+                FileHandler bamFile = new FileHandler( element.toString(), "Bam", "Input");
+                fileList.add(bamFile);
+            }catch(NullPointerException e){
+                System.out.println(e);
+            }
+
         }
 
-        File inFasta = new File(ns.get("inFasta"),"FASTA","Input");
-        File outFasta = new File(ns.get("mOut"),"FASTA","Output");
-        File finalOut = new File(ns.get("outFinal"),"vcf","Output");
+        FileHandler inFasta = new FileHandler(ns.get("inFasta").toString(),"FASTA","Input");
+        FileHandler outFasta = new FileHandler(ns.get("mOut").toString(),"FASTA","Output");
+        FileHandler finalOut = new FileHandler(ns.get("outFinal").toString(),"vcf","Output");
+
+
+        System.out.println(fileList.size());
 
         fileList.add(inFasta); fileList.add(outFasta);fileList.add(finalOut);
 
@@ -147,7 +146,7 @@ public class ArgParse {
 //            .choices("SHA-256", "SHA-512", "SHA1").setDefault("SHA-256")
 //    .help("Specify hash function to use");
 //    parser.addArgument("file").nargs("*")
-//    .help("File to calculate checksum");
+//    .help("FileHandler to calculate checksum");
 //    Namespace ns = null;
 //    try {
 //        ns = parser.parseArgs(args);

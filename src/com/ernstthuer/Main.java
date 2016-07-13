@@ -6,8 +6,9 @@ public class Main {
 
         ArgParse parser = new ArgParse(args);
 
-        for (File file:parser.fileList){
+        for (FileHandler file:parser.fileList){
             System.out.println(file.isExistant());
+            System.out.println(file.getType());
         }
 
 
@@ -21,7 +22,5 @@ public class Main {
 
 
 
-
-	// write your code here
     }
 }
