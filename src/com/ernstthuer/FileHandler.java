@@ -64,11 +64,11 @@ public class FileHandler{
             while (iterator.hasNext()) {
 
                 final SAMRecord rec = iterator.next();
-                Read read = new Read();
-                System.out.println(rec.getReadString());
-                System.out.println(rec.getAlignmentStart());
-                System.out.println(rec.getReferencePositionAtReadPosition(1));
-                System.out.println(rec.getCigar());
+                //Read read = new Read(rec.getCigarString(),rec.getAlignmentStart(),rec.getAlignmentEnd());
+                //read.findSNPs()
+                System.out.println(rec.getCigarString());
+                //System.out.println(rec.getReferencePositionAtReadPosition(1));
+                //System.out.println(rec.getCigar());
             }
             CloserUtil.close(fileBam);
 
@@ -79,23 +79,10 @@ public class FileHandler{
 
         }
 
-            /*final SamReaderFactory factory =
-                SamReaderFactory.makeDefault().enable(SamReaderFactory.Option.INCLUDE_SOURCE_IN_RECORDS)
-                //.validationStringency(ValidationStringency.valueOf(ValidationStringency.SILENT))
-                ;
-                */
-
-
-        //SamReaderFactory.makeDefault().open();
-        //final SamReader fileBam = factory.open(new File(this.locale));
-        /*while(fileBam.iterator().hasNext()){
-            System.out.println(fileBam.iterator().next());
-        }*/
 
 
 
-
-        HashSet<String> outSet = new HashSet<>();
+        HashSet<Read> outSet = new HashSet<>();
         return outSet;
     }
 
