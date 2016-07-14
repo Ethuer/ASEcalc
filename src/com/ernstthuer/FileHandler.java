@@ -1,9 +1,13 @@
 package com.ernstthuer;
-import htsjdk.samtools.SamReader;
-import htsjdk.samtools.SamReaderFactory;
+import htsjdk.samtools.*;
+import htsjdk.samtools.util.CloserUtil;
 import htsjdk.samtools.ValidationStringency;
+import htsjdk.samtools.SamFileValidator;
+//import htsjdk.samtools.util.CloserUtil;
 
 import java.io.File;
+import java.io.PrintWriter;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Scanner;
 
@@ -15,11 +19,6 @@ public class FileHandler{
     private String type;
     private String direction;
 
-    final SamReaderFactory factory =
-            SamReaderFactory.makeDefault()
-                    .enable(SamReaderFactory.Option.INCLUDE_SOURCE_IN_RECORDS, SamReaderFactory.Option.VALIDATE_CRC_CHECKSUMS)
-                    //.validationStringency(ValidationStringency.valueOf(ValidationStringency.SILENT))
-            ;
 
     public FileHandler(String locale, String type, String direction) {
         this.locale = locale;
@@ -51,16 +50,41 @@ public class FileHandler{
     }
 
     public HashSet<String> readBam(){
-        File file = new File(this.locale);
-        BamHandler infile = new BamHandler(this.locale);
-        infile.open(file);
-        //SamReaderFactory.makeDefault().open();
-        final SamReader fileBam = factory.open(new File(this.locale));
-        while(fileBam.iterator().hasNext()){
-            System.out.println(fileBam.iterator().next());
+        try {
+            final SamFileValidator validator = new SamFileValidator(new PrintWriter(System.out), 8000);
+            validator.setIgnoreWarnings(true);
+            validator.setVerbose(true, 1000);
+            validator.setErrorsToIgnore(Collections.singletonList(SAMValidationError.Type.MISSING_READ_GROUP));
+            SamReaderFactory factory = SamReaderFactory.makeDefault().validationStringency(ValidationStringency.LENIENT);
+            SamReader fileBam = factory.open(new File(this.locale));
+            final SAMRecordIterator iterator = fileBam.iterator();
+            while (iterator.hasNext()) {
+                final SAMRecord rec = iterator.next();
+                System.out.println(rec);
+            }
+            CloserUtil.close(fileBam);
+
+
+
+        }catch(Exception e){
+            System.out.println(e);
+
         }
 
-        System.out.println(fileBam);
+            /*final SamReaderFactory factory =
+                SamReaderFactory.makeDefault().enable(SamReaderFactory.Option.INCLUDE_SOURCE_IN_RECORDS)
+                //.validationStringency(ValidationStringency.valueOf(ValidationStringency.SILENT))
+                ;
+                */
+
+
+        //SamReaderFactory.makeDefault().open();
+        //final SamReader fileBam = factory.open(new File(this.locale));
+        /*while(fileBam.iterator().hasNext()){
+            System.out.println(fileBam.iterator().next());
+        }*/
+
+
 
 
         HashSet<String> outSet = new HashSet<>();

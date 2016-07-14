@@ -9,7 +9,13 @@ public class Main {
         for (FileHandler file:parser.fileList){
             System.out.println(file.isExistant());
             System.out.println(file.getType());
+            if (file.getType()== "Bam"){
+                file.readBam();
+            }
+
         }
+
+
 
 
 
