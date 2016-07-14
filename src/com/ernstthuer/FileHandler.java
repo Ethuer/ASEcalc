@@ -60,7 +60,10 @@ public class FileHandler{
             final SAMRecordIterator iterator = fileBam.iterator();
             while (iterator.hasNext()) {
                 final SAMRecord rec = iterator.next();
-                System.out.println(rec);
+                System.out.println(rec.getReadString());
+                System.out.println(rec.getAlignmentStart());
+                System.out.println(rec.getReferencePositionAtReadPosition(1));
+                System.out.println(rec.getCigar());
             }
             CloserUtil.close(fileBam);
 
