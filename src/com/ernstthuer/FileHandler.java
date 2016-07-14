@@ -55,7 +55,11 @@ public class FileHandler{
         BamHandler infile = new BamHandler(this.locale);
         infile.open(file);
         //SamReaderFactory.makeDefault().open();
-        SamReader fileBam = factory.open(new File(this.locale));
+        final SamReader fileBam = factory.open(new File(this.locale));
+        while(fileBam.iterator().hasNext()){
+            System.out.println(fileBam.iterator().next());
+        }
+
         System.out.println(fileBam);
 
 
