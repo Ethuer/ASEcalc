@@ -14,7 +14,10 @@ import java.util.Scanner;
 /**
  * Created by ethur on 7/13/16.
  *
- * General Class to handle the individual files,  no need for inheriting here, only 3 file types
+ * General Class to handle the individual files,
+ * handles import of fasta and bam files.
+ *
+ *
  */
 public class FileHandler{
     private String locale;
@@ -66,10 +69,18 @@ public class FileHandler{
             while (iterator.hasNext()) {
 
                 final SAMRecord rec = iterator.next();
-                //Read read = new Read(rec.getCigarString(),rec.getAlignmentStart(),rec.getAlignmentEnd());
-                //read.findSNPs()
-                System.out.println(rec.getCigarString());
-                //System.out.println(rec.getReferencePositionAtReadPosition(1));
+                if(rec.getInferredInsertSize() == 0 && !rec.getReadUnmappedFlag()) {
+
+                    /**
+                     * Is there a reference sequence saved in SamReader ??
+                     */
+                    Read read = new Read(rec.getCigarString(), rec.getAlignmentStart(), rec.getAlignmentEnd());
+                    //read.findSNPs()
+
+                }
+                //read.findSNPs(rec.getr);
+
+
                 //System.out.println(rec.getCigar());
             }
             CloserUtil.close(fileBam);
