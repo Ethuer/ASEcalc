@@ -13,6 +13,8 @@ import java.util.Scanner;
 
 /**
  * Created by ethur on 7/13/16.
+ *
+ * General Class to handle the individual files,  no need for inheriting here, only 3 file types
  */
 public class FileHandler{
     private String locale;

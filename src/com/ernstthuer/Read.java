@@ -6,11 +6,16 @@ import java.util.List;
  * Created by ethur on 7/14/16.
  */
 public class Read {
-
+    /**
+     * Class of read observation, loaded from a bam file, the script runs through, and finds mismatches to call all SNPs
+     * the putative SNPs should be populated by bootstrapping over samples,
+     *
+     */
+    public static List<SNP> snips;
     private String seq;
     private int start;
     private int length;
-    private List<SNP> snips ;
+    //private List<SNP> snips ;
 
     public Read(String seq, int start, int length) {
         this.seq = seq;
@@ -29,13 +34,13 @@ public class Read {
                 char chB = this.seq.charAt(i);
                 if (chA != chB) {
                     int position = i+start;
-                    // this is a snp...
                     SNP snp = new SNP(chA,chB,position);
+                    snips.add(snp);
                 }
             }
 
-
-        }return false;
+            return false;
+        }
 
 
     }
