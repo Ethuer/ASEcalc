@@ -49,7 +49,10 @@ public class FileHandler{
 
     }
 
-    public HashSet<String> readBam(){
+
+
+
+    public HashSet<Read> readBam(){
         try {
             final SamFileValidator validator = new SamFileValidator(new PrintWriter(System.out), 8000);
             validator.setIgnoreWarnings(true);
@@ -59,7 +62,9 @@ public class FileHandler{
             SamReader fileBam = factory.open(new File(this.locale));
             final SAMRecordIterator iterator = fileBam.iterator();
             while (iterator.hasNext()) {
+
                 final SAMRecord rec = iterator.next();
+                Read read = new Read();
                 System.out.println(rec.getReadString());
                 System.out.println(rec.getAlignmentStart());
                 System.out.println(rec.getReferencePositionAtReadPosition(1));
