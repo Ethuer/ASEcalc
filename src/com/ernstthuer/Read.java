@@ -3,6 +3,7 @@ package com.ernstthuer;
 import org.biojava.nbio.core.sequence.DNASequence;
 
 
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -41,22 +42,37 @@ public class Read {
         } else {
 
             int count = 0;
+            System.out.println("Here");
 
-            while(this.seq.iterator().hasNext()){
-                //System.out.println("Hier");
-                count +=1;
-                if(this.seq.iterator().next() != ref.iterator().next()){
-                    this.seq.iterator().next().toString();
-                    SNP snp = new SNP(this.gene, this.seq.iterator().next().toString().charAt(0),ref.iterator().next().toString().charAt(0),count);
-
+            for(int i = 1; i < this.seq.getLength(); i++){
+                if(this.seq.getCompoundAt(i) != ref.getCompoundAt(i)){
+                    SNP snp = new SNP(this.gene, this.seq.toString().charAt(i),ref.toString().charAt(i),i);
                     if(!snips.contains(snp)){
                         snips.add(snp);
-
                     }
-                    return snp;
-
                 }
+
+
             }
+
+//            while(this.seq.iterator().hasNext()){
+//
+//                //System.out.println("Hier");
+//                char ORG = this.seq.next();
+//                count +=1;
+//                if(this.seq.iterator().next() != ref.iterator().next()){
+//
+//                    this.seq.iterator().next().toString();
+//                    SNP snp = new SNP(this.gene, this.seq.iterator().next().toString().charAt(0),ref.iterator().next().toString().charAt(0),count);
+//
+//                    if(!snips.contains(snp)){
+//                        snips.add(snp);
+//
+//                    }
+//                    return snp;
+//
+//                }
+//            }
             return null;
         }
     }
