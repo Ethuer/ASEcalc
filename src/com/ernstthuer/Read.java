@@ -41,7 +41,9 @@ public class Read {
         } else {
 
             int count = 0;
+
             while(this.seq.iterator().hasNext()){
+                //System.out.println("Hier");
                 count +=1;
                 if(this.seq.iterator().next() != ref.iterator().next()){
                     this.seq.iterator().next().toString();
@@ -49,6 +51,7 @@ public class Read {
 
                     if(!snips.contains(snp)){
                         snips.add(snp);
+
                     }
                     return snp;
 
