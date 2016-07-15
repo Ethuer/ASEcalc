@@ -19,12 +19,14 @@ public class Read {
     public static List<SNP> snips;
     private String gene;
     private DNASequence seq;
+    private DNASequence reference;
     private int start;
     private int length;
     //private List<SNP> snips ;
 
-    public Read(DNASequence seq, int start, int length) {
+    public Read(DNASequence seq,DNASequence reference, int start, int length) {
         this.seq = seq;
+        this.reference = reference;
         this.start = start;
         this.length = length;
     }
@@ -33,9 +35,9 @@ public class Read {
         return "Gene";
     }
 
-    public boolean findSNPs(DNASequence ref) {
+    public SNP findSNPs(DNASequence ref) {
         if (ref.equals(this.seq)) {
-            return true;
+            return null;
         } else {
 
             int count = 0;
@@ -44,24 +46,15 @@ public class Read {
                 if(this.seq.iterator().next() != ref.iterator().next()){
                     this.seq.iterator().next().toString();
                     SNP snp = new SNP(this.gene, this.seq.iterator().next().toString().charAt(0),ref.iterator().next().toString().charAt(0),count);
-                    snips.add(snp);
+
+                    if(!snips.contains(snp)){
+                        snips.add(snp);
+                    }
+                    return snp;
 
                 }
             }
-
-
-            /*int minLen = ref.length();
-            for (int i = 0; i != minLen; i++) {
-                char chA = ref.charAt(i);
-                char chB = this.seq.charAt(i);
-                if (chA != chB) {
-                    int position = i+start;
-                    SNP snp = new SNP(this.gene,chA,chB,position);
-                    snips.add(snp);
-                }
-            }
-            */
-            return false;
+            return null;
         }
     }
 }

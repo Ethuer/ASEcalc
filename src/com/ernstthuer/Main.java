@@ -4,13 +4,15 @@
 
  import java.io.IOException;
  import java.util.LinkedHashMap;
+ import java.util.List;
 
  public class Main {
 
 
      public static void main(String[] args) {
+         // make that a hashMap,  SNPs by gene
+         List<SNP> snips;
          LinkedHashMap<String, DNASequence> fasta = null;
-
          ArgParse parser = new ArgParse(args);
 
          /**
@@ -25,22 +27,20 @@
                      System.out.println(e.getCause());
                      fasta = null;
                  }
-
              }
          }
 
          for (FileHandler bamfile : parser.fileList) {
              if (bamfile.getType() == "Bam") {
-                 System.out.println(fasta);
+                 //System.out.println(fasta);
                  if (fasta != null) {
-                     System.out.println(fasta.size());
+                     //System.out.println(fasta.size());
 
                      bamfile.readBam(fasta);
                  } else {
                      System.out.println("No reference loaded");
                  }
              }
-
          }
      }
  }

@@ -32,9 +32,6 @@ public class FileHandler{
     private String type;
     private String direction;
 
-
-
-
     public FileHandler(String locale, String type, String direction) {
         this.locale = locale;
         this.type = type;
@@ -61,7 +58,6 @@ public class FileHandler{
         else{
             return false;
         }
-
     }
 
 
@@ -73,10 +69,10 @@ public class FileHandler{
         try {
             File file = new File(this.locale);
             fastaMap = FastaReaderHelper.readFastaDNASequence(file);
-            for (Map.Entry<String, DNASequence> entry : fastaMap.entrySet()) {
+        /*    for (Map.Entry<String, DNASequence> entry : fastaMap.entrySet()) {
                 System.out.println(entry.getValue().getOriginalHeader());
 
-            }
+            }*/
             return fastaMap;
         } catch (IOException e) {
             e.printStackTrace();
@@ -104,21 +100,16 @@ public class FileHandler{
 
                 final SAMRecord rec = iterator.next();
                 if(rec.getInferredInsertSize() == 0 && !rec.getReadUnmappedFlag()) {
-
                     /**
                      * Is there a reference sequence saved in SamReader ??
                      */
-
                     //DNASequence readSeq = rec.getReadString();
                     DNASequence readSeq = new DNASequence(rec.getReadString());
-
                     // store reads in genes   no, better for memory to just store the SNP occurrences, no need for the rest
-                    Read read = new Read(readSeq, rec.getAlignmentStart(), rec.getAlignmentEnd());
                     DNASequence reference = new DNASequence(fastaMap.get(rec.getReferenceName()).toString().substring(rec.getAlignmentStart(),rec.getAlignmentEnd()));
-                    read.findSNPs(reference);
+                    Read read = new Read(readSeq,reference, rec.getAlignmentStart(), rec.getAlignmentEnd());
                     //System.out.println(fastaMap.keySet().contains(rec.getReferenceName())); //contains(rec.getReferenceName()));
                     //System.out.println();
-
                 }
                 //read.findSNPs(rec.getr);
                 //System.out.println(rec.getAttributes());
@@ -129,12 +120,7 @@ public class FileHandler{
 
         }catch(Exception e){
             System.out.println(e);
-
         }
-
-
-
-
         HashMap<String, Read> outSet = new HashMap<>();
         return outSet;
     }
