@@ -1,29 +1,49 @@
  package com.ernstthuer;
 
+ import org.biojava.nbio.core.sequence.DNASequence;
+
  import java.io.IOException;
+ import java.util.LinkedHashMap;
 
  public class Main {
 
-    public static void main(String[] args) {
 
-        ArgParse parser = new ArgParse(args);
+     public static void main(String[] args) {
+         LinkedHashMap<String, DNASequence> fasta = null;
 
-        for (FileHandler file:parser.fileList){
-            System.out.println(file.isExistant());
-            System.out.println(file.getType());
-            if (file.getType()== "FASTA" && file.getDirection() == "Input"){
-                try{
-                    file.readFasta();}
-                catch(IOException e){
-                    System.out.println(e.getCause());
-                }
+         ArgParse parser = new ArgParse(args);
 
-            }
-            if (file.getType()== "Bam"){
-                file.readBam();
-            }
+         /**
+          * First load the reference, then the bam file(s)
+          */
+         for (FileHandler file : parser.fileList) {
+             if (file.getType() == "FASTA" && file.getDirection() == "Input") {
+                 try {
+                     fasta = file.readFasta();
+                     System.out.println("Read fasta");
+                 } catch (IOException e) {
+                     System.out.println(e.getCause());
+                     fasta = null;
+                 }
 
-        }
+             }
+         }
+
+         for (FileHandler bamfile : parser.fileList) {
+             if (bamfile.getType() == "Bam") {
+                 System.out.println(fasta);
+                 if (fasta != null) {
+                     System.out.println(fasta.size());
+
+                     bamfile.readBam(fasta);
+                 } else {
+                     System.out.println("No reference loaded");
+                 }
+             }
+
+         }
+     }
+ }
 
 
 
@@ -38,5 +58,5 @@
 
 
 
-    }
-}
+
+

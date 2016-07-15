@@ -2,6 +2,7 @@ package com.ernstthuer;
 
 import org.biojava.nbio.core.sequence.DNASequence;
 
+
 import java.util.List;
 
 /**
@@ -32,10 +33,21 @@ public class Read {
         return "Gene";
     }
 
-    public boolean findSNPs(String ref) {
+    public boolean findSNPs(DNASequence ref) {
         if (ref.equals(this.seq)) {
             return true;
         } else {
+
+            int count = 0;
+            while(this.seq.iterator().hasNext()){
+                count +=1;
+                if(this.seq.iterator().next() != ref.iterator().next()){
+                    this.seq.iterator().next().toString();
+                    SNP snp = new SNP(this.gene, this.seq.iterator().next().toString().charAt(0),ref.iterator().next().toString().charAt(0),count);
+                    snips.add(snp);
+
+                }
+            }
 
 
             /*int minLen = ref.length();

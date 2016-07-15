@@ -33,6 +33,8 @@ public class FileHandler{
     private String direction;
 
 
+
+
     public FileHandler(String locale, String type, String direction) {
         this.locale = locale;
         this.type = type;
@@ -88,7 +90,8 @@ public class FileHandler{
 
 
 
-    public HashSet<Read> readBam() {
+    public HashMap<String, Read> readBam(LinkedHashMap fastaMap) {
+        HashMap<String,Read> ReadMap;
         try {
             final SamFileValidator validator = new SamFileValidator(new PrintWriter(System.out), 8000);
             validator.setIgnoreWarnings(true);
@@ -109,8 +112,13 @@ public class FileHandler{
                     //DNASequence readSeq = rec.getReadString();
                     DNASequence readSeq = new DNASequence(rec.getReadString());
 
+                    // store reads in genes   no, better for memory to just store the SNP occurrences, no need for the rest
                     Read read = new Read(readSeq, rec.getAlignmentStart(), rec.getAlignmentEnd());
-                    //read.findSNPs()
+                    DNASequence reference = new DNASequence(fastaMap.get(rec.getReferenceName()).toString().substring(rec.getAlignmentStart(),rec.getAlignmentEnd()));
+                    read.findSNPs(reference);
+                    //System.out.println(fastaMap.keySet().contains(rec.getReferenceName())); //contains(rec.getReferenceName()));
+                    //System.out.println();
+
                 }
                 //read.findSNPs(rec.getr);
                 //System.out.println(rec.getAttributes());
@@ -127,7 +135,7 @@ public class FileHandler{
 
 
 
-        HashSet<Read> outSet = new HashSet<>();
+        HashMap<String, Read> outSet = new HashMap<>();
         return outSet;
     }
 
