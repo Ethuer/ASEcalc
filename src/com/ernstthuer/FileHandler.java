@@ -6,11 +6,14 @@ import htsjdk.samtools.SamFileValidator;
 //import htsjdk.samtools.util.CloserUtil;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Scanner;
+import java.util.*;
 
+import org.biojava.nbio.core.sequence.DNASequence;
+import org.biojava.nbio.core.sequence.io.FastaReader;
+import org.biojava.nbio.core.sequence.io.FastaReaderHelper;
+import org.biojava.nbio.core.sequence.io.GenericFastaHeaderParser;
 /**
  * Created by ethur on 7/13/16.
  *
@@ -56,8 +59,28 @@ public class FileHandler{
 
 
 
+    public void readFasta() throws IOException {
 
-    public HashSet<Read> readBam(){
+        //List<String> seqList ;
+        LinkedHashMap<String, DNASequence> fastaMap;
+        try {
+            File file = new File(this.locale);
+            fastaMap = FastaReaderHelper.readFastaDNASequence(file);
+            for (Map.Entry<String, DNASequence> entry : fastaMap.entrySet()) {
+                System.out.println(entry.getValue().getOriginalHeader() + "=" + entry.getValue().getSequenceAsString());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            }
+
+        }
+
+
+
+
+
+    public HashSet<Read> readBam() {
         try {
             final SamFileValidator validator = new SamFileValidator(new PrintWriter(System.out), 8000);
             validator.setIgnoreWarnings(true);
@@ -76,16 +99,11 @@ public class FileHandler{
                      */
                     Read read = new Read(rec.getCigarString(), rec.getAlignmentStart(), rec.getAlignmentEnd());
                     //read.findSNPs()
-
                 }
                 //read.findSNPs(rec.getr);
-
-
                 //System.out.println(rec.getCigar());
             }
             CloserUtil.close(fileBam);
-
-
 
         }catch(Exception e){
             System.out.println(e);

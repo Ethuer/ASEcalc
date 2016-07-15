@@ -27,7 +27,6 @@ public class Read {
         if (ref.equals(this.seq)) {
             return true;
         } else {
-
             int minLen = ref.length();
             for (int i = 0; i != minLen; i++) {
                 char chA = ref.charAt(i);
@@ -38,12 +37,7 @@ public class Read {
                     snips.add(snp);
                 }
             }
-
             return false;
         }
-
-
     }
-
-
 }

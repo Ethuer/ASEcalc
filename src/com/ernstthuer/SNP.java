@@ -9,15 +9,16 @@ import javafx.geometry.Pos;
  *
  */
 public class SNP implements Comparable<SNP>{
+    private String gene;
     private char ORG;
     private char ALT;
     private int position;
     private int ORGcov;
     private int ALTcov;
-
     private boolean validated ;
 
     public SNP(char ORG, char ALT, int position) {
+
         this.ORG = ORG;
         this.ALT = ALT;
         this.position = position;
