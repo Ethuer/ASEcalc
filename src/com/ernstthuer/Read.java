@@ -14,6 +14,7 @@ public class Read {
      *
      */
     public static List<SNP> snips;
+    private String gene;
     private String seq;
     private int start;
     private int length;
@@ -23,6 +24,10 @@ public class Read {
         this.seq = seq;
         this.start = start;
         this.length = length;
+    }
+
+    public String whichGene(){
+        return "Gene";
     }
 
     public boolean findSNPs(String ref) {
@@ -35,7 +40,7 @@ public class Read {
                 char chB = this.seq.charAt(i);
                 if (chA != chB) {
                     int position = i+start;
-                    SNP snp = new SNP(chA,chB,position);
+                    SNP snp = new SNP(this.gene,chA,chB,position);
                     snips.add(snp);
                 }
             }

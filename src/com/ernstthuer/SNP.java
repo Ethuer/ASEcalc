@@ -17,8 +17,8 @@ public class SNP implements Comparable<SNP>{
     private int ALTcov;
     private boolean validated ;
 
-    public SNP(char ORG, char ALT, int position) {
-
+    public SNP(String gene, char ORG, char ALT, int position) {
+        this.gene = gene;
         this.ORG = ORG;
         this.ALT = ALT;
         this.position = position;
@@ -27,6 +27,30 @@ public class SNP implements Comparable<SNP>{
         this.validated = false;
     }
 
+
+    public int getORGcov() {
+        return ORGcov;
+    }
+
+    public void setORGcov(int ORGcov) {
+        this.ORGcov = ORGcov;
+    }
+
+    public int getALTcov() {
+        return ALTcov;
+    }
+
+    public void setALTcov(int ALTcov) {
+        this.ALTcov = ALTcov;
+    }
+
+    public boolean isValidated() {
+        return validated;
+    }
+
+    public void setValidated(boolean validated) {
+        this.validated = validated;
+    }
 
     @Override
     public int compareTo(SNP o) {

@@ -67,7 +67,7 @@ public class FileHandler{
             File file = new File(this.locale);
             fastaMap = FastaReaderHelper.readFastaDNASequence(file);
             for (Map.Entry<String, DNASequence> entry : fastaMap.entrySet()) {
-                System.out.println(entry.getValue().getOriginalHeader() + "=" + entry.getValue().getSequenceAsString());
+                System.out.println(entry.getValue().getOriginalHeader());
 
             }
             return fastaMap;

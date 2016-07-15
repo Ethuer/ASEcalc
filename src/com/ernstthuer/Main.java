@@ -11,7 +11,7 @@
         for (FileHandler file:parser.fileList){
             System.out.println(file.isExistant());
             System.out.println(file.getType());
-            if (file.getType()== "FASTA"){
+            if (file.getType()== "FASTA" && file.getDirection() == "Input"){
                 try{
                     file.readFasta();}
                 catch(IOException e){
