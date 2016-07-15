@@ -7,8 +7,10 @@ import java.util.List;
  */
 public class Read {
     /**
-     * Class of read observation, loaded from a bam file, the script runs through, and finds mismatches to call all SNPs
+     * Class of read observation, loaded from a bam file, iterates , and finds mismatches to call all SNPs
      * the putative SNPs should be populated by bootstrapping over samples,
+     *
+     * There has to be a more elegant way to load the sequence than
      *
      */
     public static List<SNP> snips;

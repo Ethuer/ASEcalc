@@ -1,6 +1,8 @@
  package com.ernstthuer;
 
-public class Main {
+ import java.io.IOException;
+
+ public class Main {
 
     public static void main(String[] args) {
 
@@ -9,6 +11,14 @@ public class Main {
         for (FileHandler file:parser.fileList){
             System.out.println(file.isExistant());
             System.out.println(file.getType());
+            if (file.getType()== "FASTA"){
+                try{
+                    file.readFasta();}
+                catch(IOException e){
+                    System.out.println(e.getCause());
+                }
+
+            }
             if (file.getType()== "Bam"){
                 file.readBam();
             }

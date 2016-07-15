@@ -58,7 +58,7 @@ public class ArgParse {
         FileHandler finalOut = new FileHandler(ns.get("outFinal").toString(),"vcf","Output");
 
 
-        System.out.println(fileList.size());
+
 
         fileList.add(inFasta); fileList.add(outFasta);fileList.add(finalOut);
 

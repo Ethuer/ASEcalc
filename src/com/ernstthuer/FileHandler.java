@@ -59,7 +59,7 @@ public class FileHandler{
 
 
 
-    public void readFasta() throws IOException {
+    public LinkedHashMap<String, DNASequence> readFasta() throws IOException {
 
         //List<String> seqList ;
         LinkedHashMap<String, DNASequence> fastaMap;
@@ -68,10 +68,13 @@ public class FileHandler{
             fastaMap = FastaReaderHelper.readFastaDNASequence(file);
             for (Map.Entry<String, DNASequence> entry : fastaMap.entrySet()) {
                 System.out.println(entry.getValue().getOriginalHeader() + "=" + entry.getValue().getSequenceAsString());
+
             }
+            return fastaMap;
         } catch (IOException e) {
             e.printStackTrace();
-
+            fastaMap = null;
+            return fastaMap;
             }
 
         }
@@ -97,11 +100,13 @@ public class FileHandler{
                     /**
                      * Is there a reference sequence saved in SamReader ??
                      */
-                    Read read = new Read(rec.getCigarString(), rec.getAlignmentStart(), rec.getAlignmentEnd());
+                    Read read = new Read(rec.getReadString(), rec.getAlignmentStart(), rec.getAlignmentEnd());
                     //read.findSNPs()
                 }
                 //read.findSNPs(rec.getr);
-                //System.out.println(rec.getCigar());
+                //System.out.println(rec.getAttributes());
+                //System.out.println(rec.getReferenceName());
+                //System.out.println("ToString " +rec.toString());
             }
             CloserUtil.close(fileBam);
 
