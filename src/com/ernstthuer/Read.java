@@ -1,5 +1,7 @@
 package com.ernstthuer;
 
+import org.biojava.nbio.core.sequence.DNASequence;
+
 import java.util.List;
 
 /**
@@ -15,12 +17,12 @@ public class Read {
      */
     public static List<SNP> snips;
     private String gene;
-    private String seq;
+    private DNASequence seq;
     private int start;
     private int length;
     //private List<SNP> snips ;
 
-    public Read(String seq, int start, int length) {
+    public Read(DNASequence seq, int start, int length) {
         this.seq = seq;
         this.start = start;
         this.length = length;
@@ -34,7 +36,9 @@ public class Read {
         if (ref.equals(this.seq)) {
             return true;
         } else {
-            int minLen = ref.length();
+
+
+            /*int minLen = ref.length();
             for (int i = 0; i != minLen; i++) {
                 char chA = ref.charAt(i);
                 char chB = this.seq.charAt(i);
@@ -44,6 +48,7 @@ public class Read {
                     snips.add(snp);
                 }
             }
+            */
             return false;
         }
     }

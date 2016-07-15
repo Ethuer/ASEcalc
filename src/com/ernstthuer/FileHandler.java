@@ -11,9 +11,14 @@ import java.io.PrintWriter;
 import java.util.*;
 
 import org.biojava.nbio.core.sequence.DNASequence;
+import org.biojava.nbio.core.sequence.io.DNASequenceCreator;
 import org.biojava.nbio.core.sequence.io.FastaReader;
 import org.biojava.nbio.core.sequence.io.FastaReaderHelper;
 import org.biojava.nbio.core.sequence.io.GenericFastaHeaderParser;
+import org.biojava.nbio.core.sequence.template.Sequence;
+
+
+
 /**
  * Created by ethur on 7/13/16.
  *
@@ -100,7 +105,11 @@ public class FileHandler{
                     /**
                      * Is there a reference sequence saved in SamReader ??
                      */
-                    Read read = new Read(rec.getReadString(), rec.getAlignmentStart(), rec.getAlignmentEnd());
+
+                    //DNASequence readSeq = rec.getReadString();
+                    DNASequence readSeq = new DNASequence(rec.getReadString());
+
+                    Read read = new Read(readSeq, rec.getAlignmentStart(), rec.getAlignmentEnd());
                     //read.findSNPs()
                 }
                 //read.findSNPs(rec.getr);
