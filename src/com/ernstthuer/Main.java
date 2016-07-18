@@ -3,6 +3,7 @@
  import org.biojava.nbio.core.sequence.DNASequence;
 
  import java.io.IOException;
+ import java.util.ArrayList;
  import java.util.LinkedHashMap;
  import java.util.List;
 
@@ -13,18 +14,14 @@
          // make that a hashMap,  SNPs by gene
          // gene list is defined in the GFFreader, but is public
 
-         List<Gene> geneList;
+         ArrayList<Gene> geneList = new ArrayList<Gene>();
          List<SNP> snips;
          LinkedHashMap<String, DNASequence> fasta = null;
          ArgParse parser = new ArgParse(args);
-
          /**
           * First load the reference, then the bam file(s)
           */
-
          for (FileHandler file : parser.fileList) {
-
-
              if(file.getType() == "GFF" && file.getDirection() == "Input"){
                  System.out.println("[STATUS]  parsing GFF file");
                  try {
@@ -33,7 +30,6 @@
                      System.out.println(e);
                  }
              }
-
 
              if (file.getType() == "FASTA" && file.getDirection() == "Input") {
                  try {
@@ -48,10 +44,7 @@
 
          for (FileHandler bamfile : parser.fileList) {
              if (bamfile.getType() == "Bam") {
-                 //System.out.println(fasta);
                  if (fasta != null) {
-                     //System.out.println(fasta.size());
-
                      bamfile.readBam(fasta);
                  } else {
                      System.out.println("No reference loaded");
@@ -60,7 +53,7 @@
          }
 
 
-
+         System.out.println("Size of the arrayList " + geneList.size());
 
 
 

@@ -69,9 +69,9 @@ public class FileHandler{
         }
     }
 
-    public List<Gene> gffParser(){
+    public ArrayList<Gene> gffParser(){
         GFFreader gffreader = new GFFreader(this.locale,this.feature );
-        List<Gene> geneList = gffreader.geneList;
+        ArrayList<Gene> geneList = gffreader.geneList;
 
         return geneList;
     }
@@ -100,7 +100,7 @@ public class FileHandler{
 
 
     public HashMap<String, Read> readBam(LinkedHashMap fastaMap) {
-        HashMap<String,Read> ReadMap;
+        HashMap<String,Read> ReadMap = new HashMap<>();
         try {
             final SamFileValidator validator = new SamFileValidator(new PrintWriter(System.out), 8000);
             validator.setIgnoreWarnings(true);
@@ -109,34 +109,34 @@ public class FileHandler{
             SamReaderFactory factory = SamReaderFactory.makeDefault().validationStringency(ValidationStringency.LENIENT);
             SamReader fileBam = factory.open(new File(this.locale));
             final SAMRecordIterator iterator = fileBam.iterator();
+            //System.out.println(iterator.toList().size());
             while (iterator.hasNext()) {
 
-                final SAMRecord rec = iterator.next();
+                SAMRecord rec = iterator.next();
+                DNASequence readSeq = new DNASequence(rec.getReadString());
                 if(rec.getInferredInsertSize() == 0 && !rec.getReadUnmappedFlag()) {
                     /**
                      * Is there a reference sequence saved in SamReader ??
                      */
-                    //DNASequence readSeq = rec.getReadString();
-                    DNASequence readSeq = new DNASequence(rec.getReadString());
+                    // System.out.println(readSeq);
+                    // DNASequence readSeq = rec.getReadString();
+                    // DNASequence readSeq = new DNASequence(rec.getReadString());
                     // store reads in genes   no, better for memory to just store the SNP occurrences, no need for the rest
                     DNASequence reference = new DNASequence(fastaMap.get(rec.getReferenceName()).toString().substring(rec.getAlignmentStart()-1,rec.getAlignmentEnd()));
                     Read read = new Read(readSeq,reference, rec.getAlignmentStart(), rec.getAlignmentEnd());
-                    //System.out.println(reference);
-                    //System.out.println(readSeq);
+                    System.out.println(reference);
+                    System.out.println(readSeq);
                     read.findSNPs(reference);
-
                     //System.out.println(fastaMap.keySet().contains(rec.getReferenceName())); //contains(rec.getReferenceName()));
                     //System.out.println();
                 }
-
             }
             CloserUtil.close(fileBam);
-
         }catch(Exception e){
             System.out.println(e);
         }
-        HashMap<String, Read> outSet = new HashMap<>();
-        return outSet;
+        //HashMap<String, Read> outSet = new HashMap<>();
+        return ReadMap;
     }
 
 }

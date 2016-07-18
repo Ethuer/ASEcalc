@@ -18,18 +18,11 @@ public class GFFreader {
      * GFF files description columns are diverse and parsing should implement a Sniffer, or preset choices.
      */
 
-    //public enum feature {
-    //    GENE, EXON, CDS, TRANSCRIPT
-    //}
-
     private String direction;
-
     private static String[] lineList = null;
     private String feature;
-    public static List<Gene> geneList;
+    public static ArrayList<Gene> geneList;
     private static String type = null;
-
-
 
     public GFFreader(String direction, String feature) {
         this.direction = direction;
@@ -66,10 +59,8 @@ public class GFFreader {
     }
 
 
-    public List<Gene> geneList(String[] featureList) {
+    public ArrayList<Gene> geneList(String[] featureList) {
         ArrayList<Gene> outList = new ArrayList<>();
-
-
 
         for (int i = 0; i  <=  featureList.length ; i++) {
             String[] row = featureList[i].split("\t");

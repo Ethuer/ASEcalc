@@ -41,15 +41,17 @@ public class Read {
             return null;
         } else {
 
-            int count = 0;
-            //System.out.println("Here");
-
             for(int i = 1; i < this.seq.getLength(); i++){
                 if(this.seq.getCompoundAt(i) != ref.getCompoundAt(i)){
                     SNP snp = new SNP(this.gene, this.seq.toString().charAt(i),ref.toString().charAt(i),i);
                     if(!snips.contains(snp)){
                         snips.add(snp);
+                    }else{
+                        int arg = snp.getALTcov();
+                        arg++;
+                        snp.setALTcov(arg);
                     }
+
                 }
 
             }
