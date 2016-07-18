@@ -24,7 +24,9 @@
 
          for (FileHandler file : parser.fileList) {
 
+
              if(file.getType() == "GFF" && file.getDirection() == "Input"){
+                 System.out.println("[STATUS]  parsing GFF file");
                  try {
                      geneList = file.gffParser();
                  }catch(Exception e){
@@ -56,6 +58,12 @@
                  }
              }
          }
+
+
+
+
+
+
 
      }
  }

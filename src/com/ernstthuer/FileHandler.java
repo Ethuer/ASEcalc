@@ -70,7 +70,7 @@ public class FileHandler{
     }
 
     public List<Gene> gffParser(){
-        GFFreader gffreader = new GFFreader(this.direction,this.type );
+        GFFreader gffreader = new GFFreader(this.locale,this.feature );
         List<Gene> geneList = gffreader.geneList;
 
         return geneList;
@@ -79,7 +79,6 @@ public class FileHandler{
 
     public LinkedHashMap<String, DNASequence> readFasta() throws IOException {
 
-        //List<String> seqList ;
         LinkedHashMap<String, DNASequence> fastaMap;
         try {
             File file = new File(this.locale);
@@ -122,8 +121,8 @@ public class FileHandler{
                     // store reads in genes   no, better for memory to just store the SNP occurrences, no need for the rest
                     DNASequence reference = new DNASequence(fastaMap.get(rec.getReferenceName()).toString().substring(rec.getAlignmentStart()-1,rec.getAlignmentEnd()));
                     Read read = new Read(readSeq,reference, rec.getAlignmentStart(), rec.getAlignmentEnd());
-                    System.out.println(reference);
-                    System.out.println(readSeq);
+                    //System.out.println(reference);
+                    //System.out.println(readSeq);
                     read.findSNPs(reference);
 
                     //System.out.println(fastaMap.keySet().contains(rec.getReferenceName())); //contains(rec.getReferenceName()));

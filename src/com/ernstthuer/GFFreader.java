@@ -3,6 +3,7 @@ package com.ernstthuer;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -23,7 +24,7 @@ public class GFFreader {
 
     private String direction;
 
-    private static String[] lineList;
+    private static String[] lineList = null;
     private String feature;
     public static List<Gene> geneList;
     private static String type = null;
@@ -38,43 +39,40 @@ public class GFFreader {
             this.lineList = openGFF(direction);
         } catch (IOException e) {
             System.out.println("GFF file not found");
-            System.out.println(e.getStackTrace());
+            System.out.println(e);
         }
 
         geneList = geneList(this.lineList);
     }
 
-    public String[] openGFF(String direction) throws IOException {
+    public String[] openGFF(String locale) throws IOException {
+        ArrayList<String> outList = new ArrayList<String>();
+        System.out.println("This is where the file is " + direction);
+        try(BufferedReader br = new BufferedReader(new FileReader(locale))){
 
-        FileReader reader = new FileReader(direction);
-        BufferedReader bufferedReader = new BufferedReader(reader);
-        int numberOfLines = countLines(bufferedReader);
-        String[] linesOfFeatures = new String[numberOfLines];
-
-        for (int i = 0; i < numberOfLines; i++) {
-            linesOfFeatures[i] = bufferedReader.readLine();
+            String sCurrentLine;
+            while ((sCurrentLine = br.readLine()) != null) {
+                outList.add(sCurrentLine);
+            }
+        }catch (IOException e) {
+            e.printStackTrace();
         }
-        bufferedReader.close();
+
+        String[] stockArr = new String[outList.size()];
+        String[] linesOfFeatures = outList.toArray(stockArr);
+
         return linesOfFeatures;
 
     }
 
-    public int countLines(BufferedReader reader) throws IOException {
-
-        String hasLine;
-        int numberOfLines = 0;
-
-        while ((hasLine = reader.readLine()) != null) {
-            numberOfLines++;
-        }
-        return numberOfLines;
-
-    }
 
     public List<Gene> geneList(String[] featureList) {
-        List<Gene> outList = null;
-        for (String entry : featureList) {
-            String[] row = entry.split("\t");
+        ArrayList<Gene> outList = new ArrayList<>();
+
+
+
+        for (int i = 0; i  <=  featureList.length ; i++) {
+            String[] row = featureList[i].split("\t");
             if (row[2].equals(this.feature)) {
                 // new feature here
                 String description = descriptionParser(row[8]);
@@ -109,7 +107,12 @@ public class GFFreader {
                 if (element.contains("gid")) {
                     type = "ENSEXP";
                 }
+                if (element.contains("geneID")){
+                    type = "ALTERNATIVE";
+                }
+
             }
+
         }
 
         switch (type) {
@@ -131,7 +134,13 @@ public class GFFreader {
                 }
                 break;
 
-            case "ENSEXP":
+            case "ALTERNATIVE":
+                for(String element: desc){
+                    if(element.contains("ID")){
+                        featureID = element.split("\"")[1];
+                        return featureID;
+                    }
+                }
                 break;
 
 

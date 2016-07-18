@@ -42,7 +42,7 @@ public class Read {
         } else {
 
             int count = 0;
-            System.out.println("Here");
+            //System.out.println("Here");
 
             for(int i = 1; i < this.seq.getLength(); i++){
                 if(this.seq.getCompoundAt(i) != ref.getCompoundAt(i)){
@@ -52,8 +52,9 @@ public class Read {
                     }
                 }
 
-
             }
+
+
 
 //            while(this.seq.iterator().hasNext()){
 //

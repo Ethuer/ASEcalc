@@ -23,7 +23,7 @@ public class ArgParse {
                 .help("input file in GFF3 format").required(true).dest("inGFF");
         this.parser.addArgument("-o", "--outfile")
                 .help("output file in FASTA format").required(false).setDefault("output.csv").dest("outFinal");
-        this.parser.addArgument("-f", "--feature")
+        this.parser.addArgument("-F", "--feature")
                 .choices("exon", "gene", "cds").setDefault("exon").dest("feature").help("choose feature to analyze, either exon, gene or cds");
         this.parser.addArgument("-m", "--mask")
                 .choices("True", "False").setDefault(true).dest("mask").help("create an intermediate masked FASTA");
