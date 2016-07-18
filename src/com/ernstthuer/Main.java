@@ -11,6 +11,9 @@
 
      public static void main(String[] args) {
          // make that a hashMap,  SNPs by gene
+         // gene list is defined in the GFFreader, but is public
+
+         List<Gene> geneList;
          List<SNP> snips;
          LinkedHashMap<String, DNASequence> fasta = null;
          ArgParse parser = new ArgParse(args);
@@ -18,7 +21,18 @@
          /**
           * First load the reference, then the bam file(s)
           */
+
          for (FileHandler file : parser.fileList) {
+
+             if(file.getType() == "GFF" && file.getDirection() == "Input"){
+                 try {
+                     geneList = file.gffParser();
+                 }catch(Exception e){
+                     System.out.println(e);
+                 }
+             }
+
+
              if (file.getType() == "FASTA" && file.getDirection() == "Input") {
                  try {
                      fasta = file.readFasta();
@@ -42,6 +56,7 @@
                  }
              }
          }
+
      }
  }
 

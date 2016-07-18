@@ -25,7 +25,7 @@ public class GFFreader {
 
     private static String[] lineList;
     private String feature;
-    private static List<Gene> geneList;
+    public static List<Gene> geneList;
     private static String type = null;
 
 

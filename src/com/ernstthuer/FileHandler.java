@@ -31,12 +31,21 @@ public class FileHandler{
     private String locale;
     private String type;
     private String direction;
+    private String feature;
 
     public FileHandler(String locale, String type, String direction) {
         this.locale = locale;
         this.type = type;
         this.direction = direction;
     }
+
+    public FileHandler(String locale, String type, String direction, String feature) {
+        this.locale = locale;
+        this.type = type;
+        this.direction = direction;
+        this.feature = feature;
+    }
+
 
     public String getLocale() {
         return locale;
@@ -60,6 +69,12 @@ public class FileHandler{
         }
     }
 
+    public List<Gene> gffParser(){
+        GFFreader gffreader = new GFFreader(this.direction,this.type );
+        List<Gene> geneList = gffreader.geneList;
+
+        return geneList;
+    }
 
 
     public LinkedHashMap<String, DNASequence> readFasta() throws IOException {
