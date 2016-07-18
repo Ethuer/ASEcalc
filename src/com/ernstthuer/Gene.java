@@ -10,16 +10,17 @@ public class Gene {
     /**
      * The term Gene is used loosely,  this could be also refering to exon or transctips.
      */
-
+    private String chromosome;
     private int start;
     private int stop;
-    private String description;
+    private String ident;
     private List<SNP> geneSNPList;
     private String ASE;
 
-    public Gene(int start, int stop, String description) {
+    public Gene(String chromosome, int start, int stop, String description) {
+        this.chromosome = chromosome;
         this.start = start;
         this.stop = stop;
-        this.description = description;
+        this.ident = description;
     }
 }

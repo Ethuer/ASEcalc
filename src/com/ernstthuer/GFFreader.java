@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
+
+import static java.lang.Integer.parseInt;
 
 /**
  * Created by ethur on 7/18/16.
@@ -14,12 +17,9 @@ public class GFFreader {
      * GFF files are diverse and parsing should implement a Sniffer, or preset choices.
      *
      *
-     * @param
-     * @return
-     * @throws IOException
      */
 
-    public enum feature {GENE,EXON,CDS,TRANSCRIPT};
+    public enum feature {GENE,EXON,CDS,TRANSCRIPT}
     private String direction;
 
     private static String[] lineList;
@@ -45,17 +45,12 @@ public class GFFreader {
 
         FileReader reader = new FileReader(direction);
         BufferedReader bufferedReader = new BufferedReader(reader);
-
-        String hasLine;
-
         int numberOfLines = countLines(bufferedReader);
         String[] linesOfFeatures = new String[numberOfLines];
 
         for (int i=0; i < numberOfLines; i++) {
             linesOfFeatures[ i ] = bufferedReader.readLine();
-
         }
-
         bufferedReader.close( );
         return linesOfFeatures;
 
@@ -75,17 +70,33 @@ public class GFFreader {
 
     public List<Gene> geneList(String[] featureList){
         List<Gene> outList = null;
-
         for(String entry: featureList){
             String[] row = entry.split("\t");
-
-
+            if(row[2].equals(this.feature)){
+                // new feature here
+                int start = parseInt(row[3]);
+                int stop = parseInt(row[4]);
+                Gene newGene = new Gene(row[0],start,stop,row[8]);
+            }
         }
-
         return outList;
     }
 
 
 
+    public String descriptionParser(String fullDescription){
 
+        String featureID ;
+        String[] desc = fullDescription.split(";");
+
+        Pattern CGD = Pattern.compile("ID=*;");
+        Pattern ENSEMBL = Pattern.compile("gene_id \"*\";");
+        Pattern ENSEXP = Pattern.compile("hid=trf;");
+
+        for(String element : desc){
+            
+        }
+
+    return null;
+    }
 }
