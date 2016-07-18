@@ -14,12 +14,12 @@ import static java.lang.Integer.parseInt;
 public class GFFreader {
 
     /**
-     * GFF files are diverse and parsing should implement a Sniffer, or preset choices.
+     * GFF files description columns are diverse and parsing should implement a Sniffer, or preset choices.
      */
 
-    public enum feature {
-        GENE, EXON, CDS, TRANSCRIPT
-    }
+    //public enum feature {
+    //    GENE, EXON, CDS, TRANSCRIPT
+    //}
 
     private String direction;
 
@@ -41,7 +41,7 @@ public class GFFreader {
             System.out.println(e.getStackTrace());
         }
 
-
+        geneList = geneList(this.lineList);
     }
 
     public String[] openGFF(String direction) throws IOException {
@@ -77,9 +77,11 @@ public class GFFreader {
             String[] row = entry.split("\t");
             if (row[2].equals(this.feature)) {
                 // new feature here
+                String description = descriptionParser(row[8]);
                 int start = parseInt(row[3]);
                 int stop = parseInt(row[4]);
-                Gene newGene = new Gene(row[0], start, stop, row[8]);
+                Gene newGene = new Gene(row[0], start, stop, description );
+                outList.add(newGene);
             }
         }
         return outList;
