@@ -57,8 +57,37 @@ public class SNP implements Comparable<SNP>{
         return validated;
     }
 
+    public int getPosition() {
+        return position;
+    }
+
     public void setValidated(boolean validated) {
         this.validated = validated;
+    }
+
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SNP snp = (SNP) o;
+
+        if (ALT != snp.ALT) return false;
+        return position == snp.position;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = (int) ALT;
+        result = 31 * result + position;
+        return result;
+    }
+
+    @Override
+    public String toString(){
+        return this.ALT + " " + this.position;
     }
 
     @Override

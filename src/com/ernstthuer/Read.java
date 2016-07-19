@@ -36,17 +36,32 @@ public class Read{
 
         try {
             SNP snip = findSNPs(this.reference);
-            if (snip != null && !snips.contains(snip)) {
+            //snips.add(snip);
+
+            if (!snips.contains(snip)) {
                 snips.add(snip);
-                //System.out.println(snip.isValidated());
             }
+
+            /*
+            if(snips.contains(snip))
+            {
+                System.out.println(snips.get(snips.lastIndexOf(snip)).toString());
+                //int cov = snips.get(snips.lastIndexOf(snip)).getALTcov();
+                //cov ++;
+                //snips.get(snips.lastIndexOf(snip)).setALTcov(cov);
+
+            }
+            */
+
         }
             catch (Exception e) {
+                System.out.println("[Warning] Malformed Read encountered");
                 StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw);
                 e.printStackTrace(pw);
                 sw.toString();
                 System.out.println(sw);
+
             }
         }
 
@@ -60,12 +75,6 @@ public class Read{
     }
 
     public SNP findSNPs(DNASequence ref) {
-        //if (this.reference == this.seq) {
-        //    return null;
-        //} else {
-
-
-
 
         if(this.reference != this.seq){
             int end = this.start+this.seq.getLength();
@@ -84,38 +93,25 @@ public class Read{
                         //System.out.println(this.gene + this.seq.toString().charAt(i) + ref.toString().charAt(i) + pos);
                         System.out.println("cannot create SNP " +e);
                     }
-                    //snips.add(snp);
-                    //if(!snips.contains(snp)){
-                        //snips.add(snp);
-                        //return snp;
-                        //System.out.println(snips.size());
-                        //System.out.println("Here");
-                   /* }else{
-                        int arg = snp.getALTcov();
-                        arg++;
-                        snp.setALTcov(arg);
-                    }*/
                 }
             }
-//            while(this.seq.iterator().hasNext()){
-//
-//                //System.out.println("Hier");
-//                char ORG = this.seq.next();
-//                count +=1;
-//                if(this.seq.iterator().next() != ref.iterator().next()){
-//
-//                    this.seq.iterator().next().toString();
-//                    SNP snp = new SNP(this.gene, this.seq.iterator().next().toString().charAt(0),ref.iterator().next().toString().charAt(0),count);
-//
-//                    if(!snips.contains(snp)){
-//                        snips.add(snp);
-//
-//                    }
-//                    return snp;
-//
-//                }
-//            }
-
         }
     return null;}
+
+
+    public boolean checkSNP(SNP snip, ArrayList<SNP> snips){
+        Iterator<SNP> iter = snips.iterator();
+
+        while(iter.hasNext()){
+            SNP data = iter.next();
+
+            if(snip.toString() == data.toString()){
+                System.out.println("Found");
+                return true;
+            }
+
+        }
+        return false;
+    }
+
 }
