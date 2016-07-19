@@ -23,4 +23,20 @@ public class Gene {
         this.stop = stop;
         this.ident = description;
     }
+
+    public String getChromosome() {
+        return chromosome;
+    }
+
+    public int getStart() {
+        return start;
+    }
+
+    public int getStop() {
+        return stop;
+    }
+
+    public String getIdent() {
+        return ident;
+    }
 }

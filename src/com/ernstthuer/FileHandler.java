@@ -124,8 +124,8 @@ public class FileHandler{
                     // store reads in genes   no, better for memory to just store the SNP occurrences, no need for the rest
                     DNASequence reference = new DNASequence(fastaMap.get(rec.getReferenceName()).toString().substring(rec.getAlignmentStart()-1,rec.getAlignmentEnd()));
                     Read read = new Read(readSeq,reference, rec.getAlignmentStart(), rec.getAlignmentEnd());
-                    System.out.println(reference);
-                    System.out.println(readSeq);
+                    //System.out.println(reference);
+                    //System.out.println(readSeq);
                     read.findSNPs(reference);
                     //System.out.println(fastaMap.keySet().contains(rec.getReferenceName())); //contains(rec.getReferenceName()));
                     //System.out.println();

@@ -27,14 +27,12 @@ public class GFFreader {
     public GFFreader(String direction, String feature) {
         this.direction = direction;
         this.feature = feature;
-
         try {
             this.lineList = openGFF(direction);
         } catch (IOException e) {
             System.out.println("GFF file not found");
             System.out.println(e);
         }
-
         geneList = geneList(this.lineList);
     }
 
@@ -62,15 +60,15 @@ public class GFFreader {
     public ArrayList<Gene> geneList(String[] featureList) {
         ArrayList<Gene> outList = new ArrayList<>();
 
-        for (int i = 0; i  <=  featureList.length ; i++) {
+        for (int i = 0; i  <  featureList.length ; i++) {
             String[] row = featureList[i].split("\t");
             if (row[2].equals(this.feature)) {
-                // new feature here
                 String description = descriptionParser(row[8]);
-                int start = parseInt(row[3]);
+                int start = parseInt(row[3]);  //start and stop position are read as String
                 int stop = parseInt(row[4]);
                 Gene newGene = new Gene(row[0], start, stop, description );
                 outList.add(newGene);
+                System.out.println(outList.size());//geneList.add(newGene);
             }
         }
         return outList;
