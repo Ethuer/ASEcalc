@@ -30,10 +30,15 @@ public class Read {
         this.reference = reference;
         this.start = start;
         this.length = length;
+        findSNPs(this.reference);
     }
 
     public String whichGene(){
         return "Gene";
+    }
+
+    public String getGene() {
+        return gene;
     }
 
     public SNP findSNPs(DNASequence ref) {
@@ -44,16 +49,17 @@ public class Read {
             for(int i = 1; i < this.seq.getLength(); i++){
                 if(this.seq.getCompoundAt(i) != ref.getCompoundAt(i)){
                     SNP snp = new SNP(this.gene, this.seq.toString().charAt(i),ref.toString().charAt(i),i);
+                    //snips.add(snp);
                     if(!snips.contains(snp)){
                         snips.add(snp);
+                        //System.out.println(snips.size());
+                        //System.out.println("Here");
                     }else{
                         int arg = snp.getALTcov();
                         arg++;
                         snp.setALTcov(arg);
                     }
-
                 }
-
             }
 
 

@@ -41,8 +41,6 @@ public class ArgParse {
             System.exit(1);
         }
 
-        System.out.println(ns);
-
         for (Object element : ns.getList("bamInput")) {
             try {
                 FileHandler bamFile = new FileHandler(element.toString(), "Bam", "Input");
@@ -50,7 +48,6 @@ public class ArgParse {
             } catch (NullPointerException e) {
                 System.out.println(e);
             }
-
         }
 
         FileHandler gffreader = new FileHandler(ns.get("inGFF").toString(), "GFF", "Input", ns.get("feature").toString());
@@ -63,7 +60,6 @@ public class ArgParse {
         fileList.add(outFasta);
         fileList.add(finalOut);
     }
-
 
     public static void addArg(ArgumentParser parser){
         parser.addArgument();

@@ -38,7 +38,7 @@ public class GFFreader {
 
     public String[] openGFF(String locale) throws IOException {
         ArrayList<String> outList = new ArrayList<String>();
-        System.out.println("This is where the file is " + direction);
+        //System.out.println("This is where the file is " + direction);
         try(BufferedReader br = new BufferedReader(new FileReader(locale))){
 
             String sCurrentLine;
@@ -68,7 +68,7 @@ public class GFFreader {
                 int stop = parseInt(row[4]);
                 Gene newGene = new Gene(row[0], start, stop, description );
                 outList.add(newGene);
-                System.out.println(outList.size());//geneList.add(newGene);
+                //System.out.println(outList.size());//geneList.add(newGene);
             }
         }
         return outList;
@@ -99,9 +99,7 @@ public class GFFreader {
                 if (element.contains("geneID")){
                     type = "ALTERNATIVE";
                 }
-
             }
-
         }
 
         switch (type) {

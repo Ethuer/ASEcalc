@@ -53,9 +53,13 @@
          }
 
 
-         System.out.println("Size of the arrayList " + geneList.size());
-
-
+         /**
+          * ToDo
+          *
+          * Gene list works,   SNP calling
+          *
+          *
+          */
 
 
      }

@@ -27,6 +27,15 @@ public class SNP implements Comparable<SNP>{
         this.validated = false;
     }
 
+    public SNP(char ORG, char ALT, int position) {
+        this.gene = null;
+        this.ORG = ORG;
+        this.ALT = ALT;
+        this.position = position;
+        this.ORGcov = 0;
+        this.ALTcov = 0;
+        this.validated = false;
+    }
 
     public int getORGcov() {
         return ORGcov;
@@ -54,7 +63,6 @@ public class SNP implements Comparable<SNP>{
 
     @Override
     public int compareTo(SNP o) {
-
         if (this.ALT == o.ALT && this.position == o.position){
             return 1;
         }else {

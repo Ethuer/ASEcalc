@@ -92,14 +92,19 @@ public class FileHandler{
             fastaMap = null;
             return fastaMap;
             }
-
         }
 
 
-
-
-
     public HashMap<String, Read> readBam(LinkedHashMap fastaMap) {
+
+        /**
+         * reads a Bam file, stores SNPs.  check if there are gene names used as reference, or chromosome names.
+         * associate SNPs to genes.  SNP by gene will be the main SNP storage.
+         *
+         *
+         *
+         *
+         */
         HashMap<String,Read> ReadMap = new HashMap<>();
         try {
             final SamFileValidator validator = new SamFileValidator(new PrintWriter(System.out), 8000);
@@ -114,7 +119,7 @@ public class FileHandler{
 
                 SAMRecord rec = iterator.next();
                 DNASequence readSeq = new DNASequence(rec.getReadString());
-                if(rec.getInferredInsertSize() == 0 && !rec.getReadUnmappedFlag()) {
+                if(!rec.getReadUnmappedFlag()) {
                     /**
                      * Is there a reference sequence saved in SamReader ??
                      */
@@ -124,11 +129,7 @@ public class FileHandler{
                     // store reads in genes   no, better for memory to just store the SNP occurrences, no need for the rest
                     DNASequence reference = new DNASequence(fastaMap.get(rec.getReferenceName()).toString().substring(rec.getAlignmentStart()-1,rec.getAlignmentEnd()));
                     Read read = new Read(readSeq,reference, rec.getAlignmentStart(), rec.getAlignmentEnd());
-                    //System.out.println(reference);
-                    //System.out.println(readSeq);
-                    read.findSNPs(reference);
-                    //System.out.println(fastaMap.keySet().contains(rec.getReferenceName())); //contains(rec.getReferenceName()));
-                    //System.out.println();
+                    //System.out.println(read.toString());
                 }
             }
             CloserUtil.close(fileBam);
