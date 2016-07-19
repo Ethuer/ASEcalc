@@ -95,13 +95,11 @@ public class FileHandler{
         }
 
 
-    public HashMap<String, Read> readBam(LinkedHashMap fastaMap) {
+    public HashMap<String, Read> readBam(LinkedHashMap fastaMap, ArrayList<SNP> snips) {
 
         /**
          * reads a Bam file, stores SNPs.  check if there are gene names used as reference, or chromosome names.
          * associate SNPs to genes.  SNP by gene will be the main SNP storage.
-         *
-         *
          *
          *
          */
@@ -113,27 +111,31 @@ public class FileHandler{
             validator.setErrorsToIgnore(Collections.singletonList(SAMValidationError.Type.MISSING_READ_GROUP));
             SamReaderFactory factory = SamReaderFactory.makeDefault().validationStringency(ValidationStringency.LENIENT);
             SamReader fileBam = factory.open(new File(this.locale));
-            final SAMRecordIterator iterator = fileBam.iterator();
+            SAMRecordIterator iterator = fileBam.iterator();
             //System.out.println(iterator.toList().size());
+            int count = 0;
             while (iterator.hasNext()) {
 
                 SAMRecord rec = iterator.next();
                 DNASequence readSeq = new DNASequence(rec.getReadString());
-                if(!rec.getReadUnmappedFlag()) {
-                    /**
-                     * Is there a reference sequence saved in SamReader ??
-                     */
-                    // System.out.println(readSeq);
-                    // DNASequence readSeq = rec.getReadString();
-                    // DNASequence readSeq = new DNASequence(rec.getReadString());
-                    // store reads in genes   no, better for memory to just store the SNP occurrences, no need for the rest
-                    DNASequence reference = new DNASequence(fastaMap.get(rec.getReferenceName()).toString().substring(rec.getAlignmentStart()-1,rec.getAlignmentEnd()));
-                    Read read = new Read(readSeq,reference, rec.getAlignmentStart(), rec.getAlignmentEnd());
-                    //System.out.println(read.toString());
+                if (!rec.getReadUnmappedFlag()) {
+
+
+                    // Consider giving the reads to the individual genes, then deleting the genes without SNPs
+                    DNASequence reference = new DNASequence(fastaMap.get(rec.getReferenceName()).toString().substring(rec.getAlignmentStart() - 1, rec.getAlignmentEnd()));
+                    new Read(snips, readSeq, reference, rec.getAlignmentStart(), rec.getAlignmentEnd());
+                    count++;
+
+                    if(count % 10000 == 0){
+                        System.out.println("Counting " +count+" Reads");
+                    }
+
+
                 }
             }
+            System.out.println("Number of reads" + count);
             CloserUtil.close(fileBam);
-        }catch(Exception e){
+        } catch (Exception e) {
             System.out.println(e);
         }
         //HashMap<String, Read> outSet = new HashMap<>();

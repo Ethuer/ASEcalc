@@ -15,11 +15,14 @@
          // gene list is defined in the GFFreader, but is public
 
          ArrayList<Gene> geneList = new ArrayList<Gene>();
-         List<SNP> snips;
+         ArrayList<SNP> snips = new ArrayList<>();
+         //List<SNP> snips;
          LinkedHashMap<String, DNASequence> fasta = null;
          ArgParse parser = new ArgParse(args);
          /**
           * First load the reference, then the bam file(s)
+          *
+          *
           */
          for (FileHandler file : parser.fileList) {
              if(file.getType() == "GFF" && file.getDirection() == "Input"){
@@ -45,7 +48,7 @@
          for (FileHandler bamfile : parser.fileList) {
              if (bamfile.getType() == "Bam") {
                  if (fasta != null) {
-                     bamfile.readBam(fasta);
+                     bamfile.readBam(fasta, snips);
                  } else {
                      System.out.println("No reference loaded");
                  }
