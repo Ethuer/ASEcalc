@@ -28,6 +28,7 @@ public class Read{
     private DNASequence reference;
     private int start;
     private int length;
+    static boolean mappedAgainstChromosomes ;
     //private List<SNP> snips ;
 
     public Read(String gene, ArrayList<SNP> snips , DNASequence seq, DNASequence reference, int start, int length) {
@@ -50,14 +51,20 @@ public class Read{
                     int cov = snips.get(snips.indexOf(snip)).getALTcov();
                     cov++;
                     snips.get(snips.indexOf(snip)).setALTcov(cov);
-                    System.out.println(" current coverage " + cov);
+
+                    if(cov > 3 ){
+                        snips.get(snips.indexOf(snip)).setValidated(1);
+                    }
+
+                    //System.out.println(" current coverage " + cov);
                 }catch(Exception e){
-                    System.out.println(e);
+                    /*System.out.println(e);
                     StringWriter sw = new StringWriter();
                     PrintWriter pw = new PrintWriter(sw);
                     e.printStackTrace(pw);
                     sw.toString();
                     System.out.println(sw);
+                    */
                 }
             }
 
@@ -74,11 +81,12 @@ public class Read{
         }
             catch (Exception e) {
                 System.out.println("[Warning] Malformed Read encountered");
-                StringWriter sw = new StringWriter();
+                /*StringWriter sw = new StringWriter();
                 PrintWriter pw = new PrintWriter(sw);
                 e.printStackTrace(pw);
                 sw.toString();
                 System.out.println(sw);
+                */
 
             }
         }

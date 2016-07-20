@@ -1,5 +1,6 @@
 package com.ernstthuer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,8 @@ public class Gene {
     private int start;
     private int stop;
     private String ident;
-    private List<SNP> geneSNPList;
+    private List<SNP> geneSNPList = new ArrayList<>();
+    private List<Read> geneReadList = new ArrayList<>();
     private String ASE;
 
     public Gene(String chromosome, int start, int stop, String description) {

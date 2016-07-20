@@ -72,7 +72,6 @@ public class FileHandler{
     public ArrayList<Gene> gffParser(){
         GFFreader gffreader = new GFFreader(this.locale,this.feature );
         ArrayList<Gene> geneList = gffreader.geneList;
-
         return geneList;
     }
 
@@ -124,6 +123,12 @@ public class FileHandler{
                     // Consider giving the reads to the individual genes, then deleting the genes without SNPs
                     DNASequence reference = new DNASequence(fastaMap.get(rec.getReferenceName()).toString().substring(rec.getAlignmentStart() - 1, rec.getAlignmentEnd()));
                     //System.out.println(" Attributes " + rec.getReferenceName());
+
+
+                    // check if it was mapped against chromosomes or genes
+
+
+
 
                     new Read( rec.getReferenceName(), snips, readSeq, reference, rec.getAlignmentStart(), rec.getAlignmentEnd());
                     count++;

@@ -29,6 +29,13 @@ public class GFFreader {
         this.feature = feature;
         try {
             this.lineList = openGFF(direction);
+
+            /* validate line List
+            System.out.println("LineList = " + this.lineList.length);
+            for(int i = 0; i < lineList.length; i++){
+                System.out.println(lineList[i]);
+            }
+            */
         } catch (IOException e) {
             System.out.println("GFF file not found");
             System.out.println(e);
@@ -58,8 +65,9 @@ public class GFFreader {
 
 
     public ArrayList<Gene> geneList(String[] featureList) {
-        ArrayList<Gene> outList = new ArrayList<>();
 
+        ArrayList<Gene> outList = new ArrayList<>();
+        System.out.println("[Status] Parsing gff file for :" + this.feature + "s");
         for (int i = 0; i  <  featureList.length ; i++) {
             String[] row = featureList[i].split("\t");
             if (row[2].equals(this.feature)) {
@@ -68,6 +76,8 @@ public class GFFreader {
                 int stop = parseInt(row[4]);
                 Gene newGene = new Gene(row[0], start, stop, description );
                 outList.add(newGene);
+
+
                 //System.out.println(outList.size());//geneList.add(newGene);
             }
         }
