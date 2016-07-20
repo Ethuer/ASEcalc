@@ -14,6 +14,7 @@ import net.sourceforge.argparse4j.inf.Namespace;
 public class ArgParse {
     public static ArgumentParser parser = ArgumentParsers.newArgumentParser("Checksum").defaultHelp(true).description("ACEcalc");
     public static List<FileHandler> fileList = new ArrayList<>();
+    private boolean maskFasta;
 
     public ArgParse(String[] args) {
 
@@ -36,10 +37,16 @@ public class ArgParse {
 
         try {
             ns = parser.parseArgs(args);
+
+            //
+            this.maskFasta  = ns.getBoolean("mask");
         } catch (ArgumentParserException e) {
             parser.handleError(e);
             System.exit(1);
         }
+
+
+
 
         for (Object element : ns.getList("bamInput")) {
             try {
@@ -65,5 +72,7 @@ public class ArgParse {
         parser.addArgument();
     }
 
-
+    public boolean isMaskFasta() {
+        return maskFasta;
+    }
 }

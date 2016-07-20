@@ -76,9 +76,9 @@ public class FileHandler{
     }
 
 
-    public LinkedHashMap<String, DNASequence> readFasta() throws IOException {
+    public HashMap<String, DNASequence> readFasta() throws IOException {
 
-        LinkedHashMap<String, DNASequence> fastaMap;
+        HashMap<String, DNASequence> fastaMap;
         try {
             File file = new File(this.locale);
             fastaMap = FastaReaderHelper.readFastaDNASequence(file);
@@ -94,7 +94,7 @@ public class FileHandler{
         }
 
 
-    public HashMap<String, Read> readBam(LinkedHashMap fastaMap, ArrayList<SNP> snips) {
+    public HashMap<String, Read> readBam(HashMap fastaMap, ArrayList<SNP> snips) {
 
         /**
          * reads a Bam file, stores SNPs.  check if there are gene names used as reference, or chromosome names.

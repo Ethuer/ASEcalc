@@ -1,12 +1,10 @@
  package com.ernstthuer;
 
+ import com.sun.istack.internal.NotNull;
  import org.biojava.nbio.core.sequence.DNASequence;
 
  import java.io.IOException;
- import java.util.ArrayList;
- import java.util.Iterator;
- import java.util.LinkedHashMap;
- import java.util.List;
+ import java.util.*;
 
  public class Main {
 
@@ -18,7 +16,7 @@
          ArrayList<Gene> geneList = new ArrayList<Gene>();
          ArrayList<SNP> snips = new ArrayList<>();
          //List<SNP> snips;
-         LinkedHashMap<String, DNASequence> fasta = null;
+         HashMap<String, DNASequence> fasta = new HashMap<>();
          ArgParse parser = new ArgParse(args);
          /**
           * First load the reference, then the bam file(s)
@@ -96,8 +94,7 @@
          System.out.println("Amount of SNPs found " + snips.size());
          Iterator<SNP> iter = snips.iterator();
 
-         //  Purge the nonvalidated SNPs with validation below 1
-
+         //  Purge the nonvalidated SNPs with validation below threshold of 1.  1 denominates minimum read count
 
          int remainCount = 0;
          int removedCount = 0;
@@ -117,7 +114,42 @@
              }
              //System.out.println(foundSNP.getPosition() + "  " + iter.next().getALTcov());
          }
+         System.out.println("Snips still in dictionary " + snips.size());
          System.out.println("Keeping "+remainCount+" SNPs;   Removed " + removedCount + " SNP due to low coverage");
+         // write the modified fasta to file for remapping here
+
+
+         Iterator fastait = fasta.entrySet().iterator();
+
+
+         if(parser.isMaskFasta()) {
+             new FastaSilencer(snips, fasta);
+         }
+
+
+
+             /*
+         }
+
+         for(String i : fasta.keySet()){
+             System.out.println(i + fasta.get(i));
+         }
+
+*/
+/*
+         try {
+             while (fastait.hasNext()) {
+                 fastait.next();
+                 Map.Entry pair = (Map.Entry) fastait.next();
+                 System.out.println(pair.getKey() + " = " + pair.getValue());
+                 fastait.remove();
+             }
+         }
+         catch (NullPointerException e){
+             System.out.println("Fasta read nullpointer exception, expected from map");
+         }
+
+*/
 
          /**
           * ToDo
