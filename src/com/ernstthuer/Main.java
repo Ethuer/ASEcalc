@@ -119,7 +119,7 @@
          // write the modified fasta to file for remapping here
 
 
-         Iterator fastait = fasta.entrySet().iterator();
+         //Iterator fastait = fasta.entrySet().iterator();
 
 
          if(parser.isMaskFasta()) {

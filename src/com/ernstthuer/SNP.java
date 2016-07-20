@@ -37,6 +37,14 @@ public class SNP implements Comparable<SNP>{
         return ORGcov;
     }
 
+    public char getORG() {
+        return ORG;
+    }
+
+    public String getGene() {
+        return gene;
+    }
+
     public void setORGcov(int ORGcov) {
         this.ORGcov = ORGcov;
     }

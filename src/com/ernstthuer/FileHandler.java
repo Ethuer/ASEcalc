@@ -78,6 +78,13 @@ public class FileHandler{
 
     public HashMap<String, DNASequence> readFasta() throws IOException {
 
+        /**
+         * Method supplied by biojava to read fasta file into hashMap
+         *
+         *
+         *
+         */
+
         HashMap<String, DNASequence> fastaMap;
         try {
             File file = new File(this.locale);
@@ -122,13 +129,9 @@ public class FileHandler{
 
                     // Consider giving the reads to the individual genes, then deleting the genes without SNPs
                     DNASequence reference = new DNASequence(fastaMap.get(rec.getReferenceName()).toString().substring(rec.getAlignmentStart() - 1, rec.getAlignmentEnd()));
-                    //System.out.println(" Attributes " + rec.getReferenceName());
 
 
                     // check if it was mapped against chromosomes or genes
-
-
-
 
                     new Read( rec.getReferenceName(), snips, readSeq, reference, rec.getAlignmentStart(), rec.getAlignmentEnd());
                     count++;
