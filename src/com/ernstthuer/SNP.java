@@ -13,18 +13,16 @@ public class SNP implements Comparable<SNP>{
     private char ORG;
     private char ALT;
     private int position;
-    private int ORGcov;
-    private int ALTcov;
-    private boolean validated ;
+    private int ORGcov = 1;
+    private int ALTcov = 1;
+    private int validated ;
 
     public SNP(String gene, char ORG, char ALT, int position) {
         this.gene = gene;
         this.ORG = ORG;
         this.ALT = ALT;
         this.position = position;
-        this.ORGcov = 0;
-        this.ALTcov = 0;
-        this.validated = false;
+        this.validated = 0;
     }
 
     public SNP(char ORG, char ALT, int position) {
@@ -32,9 +30,7 @@ public class SNP implements Comparable<SNP>{
         this.ORG = ORG;
         this.ALT = ALT;
         this.position = position;
-        this.ORGcov = 0;
-        this.ALTcov = 0;
-        this.validated = false;
+        this.validated = 0;
     }
 
     public int getORGcov() {
@@ -53,7 +49,7 @@ public class SNP implements Comparable<SNP>{
         this.ALTcov = ALTcov;
     }
 
-    public boolean isValidated() {
+    public int isValidated() {
         return validated;
     }
 
@@ -61,8 +57,13 @@ public class SNP implements Comparable<SNP>{
         return position;
     }
 
-    public void setValidated(boolean validated) {
+    public void setValidated(int validated) {
         this.validated = validated;
+
+    }
+
+    public void raiseValidation(){
+        this.validated ++;
     }
 
 
@@ -74,13 +75,15 @@ public class SNP implements Comparable<SNP>{
         SNP snp = (SNP) o;
 
         if (ALT != snp.ALT) return false;
-        return position == snp.position;
+        if (position != snp.position) return false;
+        return gene != null ? gene.equals(snp.gene) : snp.gene == null;
 
     }
 
     @Override
     public int hashCode() {
-        int result = (int) ALT;
+        int result = gene != null ? gene.hashCode() : 0;
+        result = 31 * result + (int) ALT;
         result = 31 * result + position;
         return result;
     }

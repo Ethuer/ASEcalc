@@ -123,7 +123,9 @@ public class FileHandler{
 
                     // Consider giving the reads to the individual genes, then deleting the genes without SNPs
                     DNASequence reference = new DNASequence(fastaMap.get(rec.getReferenceName()).toString().substring(rec.getAlignmentStart() - 1, rec.getAlignmentEnd()));
-                    new Read(snips, readSeq, reference, rec.getAlignmentStart(), rec.getAlignmentEnd());
+                    //System.out.println(" Attributes " + rec.getReferenceName());
+
+                    new Read( rec.getReferenceName(), snips, readSeq, reference, rec.getAlignmentStart(), rec.getAlignmentEnd());
                     count++;
 
                     if(count % 10000 == 0){

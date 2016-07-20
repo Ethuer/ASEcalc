@@ -19,6 +19,8 @@ public class Read{
      *
      * There has to be a more elegant way to load the sequence than
      *
+     * string gene is the reference,  this can also mean gene.  needs a special method to test..
+     *
      */
     //public static ArrayList<SNP> snips = ;
     private String gene;
@@ -28,7 +30,8 @@ public class Read{
     private int length;
     //private List<SNP> snips ;
 
-    public Read(ArrayList<SNP> snips , DNASequence seq, DNASequence reference, int start, int length) {
+    public Read(String gene, ArrayList<SNP> snips , DNASequence seq, DNASequence reference, int start, int length) {
+        this.gene = gene;
         this.seq = seq;
         this.reference = reference;
         this.start = start;
@@ -41,6 +44,22 @@ public class Read{
             if (!snips.contains(snip)) {
                 snips.add(snip);
             }
+            if(snips.contains(snip)){
+                try {
+                    //System.out.println(snips.get(snips.indexOf(snip)).getALTcov());
+                    int cov = snips.get(snips.indexOf(snip)).getALTcov();
+                    cov++;
+                    snips.get(snips.indexOf(snip)).setALTcov(cov);
+                    System.out.println(" current coverage " + cov);
+                }catch(Exception e){
+                    System.out.println(e);
+                    StringWriter sw = new StringWriter();
+                    PrintWriter pw = new PrintWriter(sw);
+                    e.printStackTrace(pw);
+                    sw.toString();
+                    System.out.println(sw);
+                }
+            }
 
             /*
             if(snips.contains(snip))
@@ -49,7 +68,6 @@ public class Read{
                 //int cov = snips.get(snips.lastIndexOf(snip)).getALTcov();
                 //cov ++;
                 //snips.get(snips.lastIndexOf(snip)).setALTcov(cov);
-
             }
             */
 
@@ -76,10 +94,10 @@ public class Read{
 
     public SNP findSNPs(DNASequence ref) {
 
-        if(this.reference != this.seq){
-            int end = this.start+this.seq.getLength();
-            for(int i = 1; i < this.seq.getLength(); i++){
-                if(!this.seq.getCompoundAt(i).toString().equals(ref.getCompoundAt(i).toString())){
+        if (this.reference != this.seq) {
+            int end = this.start + this.seq.getLength();
+            for (int i = 1; i < this.seq.getLength(); i++) {
+                if (!this.seq.getCompoundAt(i).toString().equals(ref.getCompoundAt(i).toString())) {
 
                     int pos = i + this.start;
                     try {
@@ -89,14 +107,15 @@ public class Read{
                         SNP snp = new SNP(this.gene, this.seq.toString().charAt(i), ref.toString().charAt(i), pos);
                         //System.out.println("found SNP in :" + this.seq.toString().charAt(i) );
                         return snp;
-                    }catch(NullPointerException e){
+                    } catch (NullPointerException e) {
                         //System.out.println(this.gene + this.seq.toString().charAt(i) + ref.toString().charAt(i) + pos);
-                        System.out.println("cannot create SNP " +e);
+                        System.out.println("cannot create SNP " + e);
                     }
                 }
             }
         }
-    return null;}
+        return null;
+    }
 
 
     public boolean checkSNP(SNP snip, ArrayList<SNP> snips){
