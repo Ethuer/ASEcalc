@@ -86,7 +86,7 @@ public class FastaSilencer {
         }
 
 
-        String filename = "~/TestFile.fasta";
+        String filename = "/home/ethur/IdeaProjects/ACEcalc0.31/out/TestFile.fasta";
         // new fasta file should be available here...
         try {
             BufferedOutputStream outFast = new BufferedOutputStream(new FileOutputStream(filename));

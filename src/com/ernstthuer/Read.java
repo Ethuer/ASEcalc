@@ -38,7 +38,12 @@ public class Read{
         this.start = start;
         this.length = length;
 
+        //check if read contains known SNP position
+
+
         try {
+
+
             SNP snip = findSNPs(this.reference);
             //snips.add(snip);
 
@@ -52,7 +57,7 @@ public class Read{
                     cov++;
                     snips.get(snips.indexOf(snip)).setALTcov(cov);
 
-                    if(cov > 3 ){
+                    if(cov > 5 ){
                         snips.get(snips.indexOf(snip)).setValidated(1);
                     }
 
@@ -101,11 +106,19 @@ public class Read{
     }
 
     public SNP findSNPs(DNASequence ref) {
+        if (this.reference == this.seq){
+
+
+
+
+        }
+
 
         if (this.reference != this.seq) {
             int end = this.start + this.seq.getLength();
             for (int i = 1; i < this.seq.getLength(); i++) {
                 if (!this.seq.getCompoundAt(i).toString().equals(ref.getCompoundAt(i).toString())) {
+                    //System.out.println("Compare " + this.seq.getCompoundAt(i).toString() +ref.getCompoundAt(i).toString() );
 
                     int pos = i + this.start;
                     try {
@@ -140,5 +153,16 @@ public class Read{
         }
         return false;
     }
+
+    /*
+    public SNP findExisingSNP(ArrayList<SNP> snips){
+
+
+
+
+
+
+    }
+    */
 
 }

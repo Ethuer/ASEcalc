@@ -15,6 +15,7 @@
          ArrayList<Chromosome> chromosomeArrayList = new ArrayList<>();
          ArrayList<Gene> geneList = new ArrayList<Gene>();
          ArrayList<SNP> snips = new ArrayList<>();
+         //HashMap<Gene, Nucleotide> nucleotides = new HashMap<>();
          //List<SNP> snips;
          HashMap<String, DNASequence> fasta = new HashMap<>();
          ArgParse parser = new ArgParse(args);

@@ -11,6 +11,7 @@ public class Gene {
     /**
      * The term Gene is used loosely,  this could be also refering to exon or transctips.
      */
+    private ArrayList<Nucleotide> sequenceCoverage = new ArrayList<>();
     private String chromosome;
     private int start;
     private int stop;
