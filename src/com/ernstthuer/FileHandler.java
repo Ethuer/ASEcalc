@@ -77,7 +77,7 @@ public class FileHandler{
     }
 
 
-    public HashMap<String, DNASequence> readFasta() throws IOException {
+    public HashMap<String, DNASequence> readFasta(ArrayList<Gene> geneList) throws IOException {
 
         /**
          * Method supplied by biojava to read fasta file into hashMap
@@ -86,10 +86,32 @@ public class FileHandler{
          *
          */
 
+        // check if chromosomes or genes were used as reference ....
+
+
+
+
+
         HashMap<String, DNASequence> fastaMap;
         try {
             File file = new File(this.locale);
             fastaMap = FastaReaderHelper.readFastaDNASequence(file);
+
+
+            for(Gene gene:geneList){
+                if(fastaMap.containsKey(gene.getChromosome())){
+                    //it's on the chromosome
+                    gene.loadSequence(fastaMap.get(gene.getChromosome()),true);
+                }
+                else{
+                    //genes were used directly
+                    gene.loadSequence(fastaMap.get(gene.getChromosome()),false);
+                    //gene.loadSequence(fastaMap.v);
+
+                }
+
+
+            }
         /*    for (Map.Entry<String, DNASequence> entry : fastaMap.entrySet()) {
                 System.out.println(entry.getValue().getOriginalHeader());
             }*/

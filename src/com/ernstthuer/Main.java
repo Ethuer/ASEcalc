@@ -21,8 +21,6 @@
          ArgParse parser = new ArgParse(args);
          /**
           * First load the reference, then the bam file(s)
-          *
-          *
           */
          for (FileHandler file : parser.fileList) {
              if(file.getType() == "GFF" && file.getDirection() == "Input"){
@@ -36,7 +34,13 @@
 
              if (file.getType() == "FASTA" && file.getDirection() == "Input") {
                  try {
-                     fasta = file.readFasta();
+                     fasta = file.readFasta(geneList);
+
+                     //fasta2gene
+
+
+
+
                      System.out.println("Read fasta");
                  } catch (IOException e) {
                      System.out.println(e.getCause());
@@ -126,6 +130,7 @@
          if(parser.isMaskFasta()) {
              new FastaSilencer(snips, fasta);
          }
+
 
 
 

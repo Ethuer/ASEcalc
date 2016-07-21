@@ -10,9 +10,6 @@ public class Chromosome {
 
     /**
      * Needs chromosome distinction,  possibility for ASE on chromosome level.
-     *
-     *
-     *
      */
     private String name;
     private ArrayList<Gene> genesOnChromosome = new ArrayList<>();
