@@ -21,7 +21,7 @@ public class Gene {
     private int stop;
     private String ident;
     private List<SNP> geneSNPList = new ArrayList<>();
-    private List<Read> geneReadList = new ArrayList<>();
+    private List<SImpleRead> geneReadList = new ArrayList<>();
     private String ASE;
 
     public Gene(String chromosome, int start, int stop, String description) {
@@ -63,5 +63,10 @@ public class Gene {
         }
 
     }
+
+    public void addRead(SImpleRead read){
+        this.geneReadList.add(read);
+    }
+
 }
 

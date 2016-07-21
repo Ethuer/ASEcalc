@@ -15,6 +15,8 @@
          ArrayList<Chromosome> chromosomeArrayList = new ArrayList<>();
          ArrayList<Gene> geneList = new ArrayList<Gene>();
          ArrayList<SNP> snips = new ArrayList<>();
+
+         ArrayList<Integer> snpPositions = new ArrayList<>();
          //HashMap<Gene, Nucleotide> nucleotides = new HashMap<>();
          //List<SNP> snips;
          HashMap<String, DNASequence> fasta = new HashMap<>();
@@ -88,7 +90,7 @@
          for (FileHandler bamfile : parser.fileList) {
              if (bamfile.getType() == "Bam") {
                  if (fasta != null) {
-                     bamfile.readBam(fasta, snips);
+                     bamfile.readBam(fasta, geneList, snips);
                  } else {
                      System.out.println("No reference loaded");
                  }
@@ -134,6 +136,7 @@
 
 
 
+
              /*
          }
 
@@ -160,10 +163,27 @@
          /**
           * ToDo
           *
-          * Gene list works,   SNP calling
+          * Gene list works,   SNP calling works,   SNP quantifying
           *
           *
           */
+
+         System.out.println("Newest version test");
+
+         // QUantifying SNPs here
+
+         // send the SNPs to the genes
+
+
+
+         Iterator<SNP> snp2position = snips.iterator();
+
+         while(snp2position.hasNext()){
+             SNP snp = snp2position.next();
+             snpPositions.add(snp.getPosition());
+         }
+
+
 
 
      }

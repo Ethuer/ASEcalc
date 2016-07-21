@@ -31,7 +31,7 @@ public class Read{
     static boolean mappedAgainstChromosomes ;
     //private List<SNP> snips ;
 
-    public Read(String gene, ArrayList<SNP> snips , DNASequence seq, DNASequence reference, int start, int length) {
+    public Read(ArrayList<Gene> geneList, String gene, ArrayList<SNP> snips , DNASequence seq, DNASequence reference, int start, int length, String MZ) {
         this.gene = gene;
         this.seq = seq;
         this.reference = reference;
@@ -39,6 +39,25 @@ public class Read{
         this.length = length;
 
         //check if read contains known SNP position
+
+        // find which gene this belongs to , then store it there
+
+        for(Gene possibleGene:geneList){
+            if(possibleGene.getIdent() == gene){
+                //mapped against gene, easy.
+                SImpleRead spl = new SImpleRead(start,MZ);
+                  possibleGene.addRead(spl);
+
+
+
+            }
+            if(possibleGene.getChromosome() == gene){
+
+            }
+        }
+
+
+
 
         try {
             SNP snip = findSNPs(this.reference);

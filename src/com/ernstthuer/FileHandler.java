@@ -102,15 +102,13 @@ public class FileHandler{
                 if(fastaMap.containsKey(gene.getChromosome())){
                     //it's on the chromosome
                     gene.loadSequence(fastaMap.get(gene.getChromosome()),true);
+                    System.out.println("populating genes");
                 }
                 else{
                     //genes were used directly
                     gene.loadSequence(fastaMap.get(gene.getChromosome()),false);
                     //gene.loadSequence(fastaMap.v);
-
                 }
-
-
             }
         /*    for (Map.Entry<String, DNASequence> entry : fastaMap.entrySet()) {
                 System.out.println(entry.getValue().getOriginalHeader());
@@ -124,7 +122,7 @@ public class FileHandler{
         }
 
 
-    public HashMap<String, Read> readBam(HashMap fastaMap, ArrayList<SNP> snips) {
+    public HashMap<String, Read> readBam(HashMap fastaMap,ArrayList<Gene> geneList, ArrayList<SNP> snips) {
 
         /**
          * reads a Bam file, stores SNPs.  check if there are gene names used as reference, or chromosome names.
@@ -148,36 +146,27 @@ public class FileHandler{
                 SAMRecord rec = iterator.next();
                 DNASequence readSeq = new DNASequence(rec.getReadString());
 
-
                 if (!rec.getReadUnmappedFlag()) {
                     //System.out.println("Quality : " + rec.getMappingQuality());
 
-
                     /**
                     // This is the mz score,  use that instead of sequences....
-
                     // potential quality filter ...   System.out.println(rec.getBaseQualityString());
                     String MZ = rec.getSAMString().split("\t")[11].split(":")[2];
                     //System.out.println(MZ);
-
                     DNASequence reference = new DNASequence(fastaMap.get(rec.getReferenceName()).toString().substring(rec.getAlignmentStart() - 1, rec.getAlignmentEnd()));
-
-
-
                     parseMZscore(rec.getAlignmentStart() , rec.getReferenceName(),  MZ, fastaMap.get(rec.getReferenceName()).toString());
-
                      //*/
                     //SNP found = new
                     //System.out.println(rec.getSAMString().split("\t")[11].split(":")[2]);
                     // Consider giving the reads to the individual genes, then deleting the genes without SNPs
-
                     ///** Legacy,  reduce this to MZ string handling, creates
 
                     DNASequence reference = new DNASequence(fastaMap.get(rec.getReferenceName()).toString().substring(rec.getAlignmentStart() - 1, rec.getAlignmentEnd()));
 
                     // check if it was mapped against chromosomes or genes
-
-                    new Read( rec.getReferenceName(), snips, readSeq, reference, rec.getAlignmentStart(), rec.getAlignmentEnd());
+                    String MZ = rec.getSAMString().split("\t")[11].split(":")[2];
+                    new Read( geneList, rec.getReferenceName(), snips, readSeq, reference, rec.getAlignmentStart(), rec.getAlignmentEnd(),MZ);
                     //*/
 
                     count ++;
