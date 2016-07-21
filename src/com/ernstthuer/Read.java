@@ -53,6 +53,12 @@ public class Read{
             }
             if(possibleGene.getChromosome() == gene){
 
+                if(start >= possibleGene.getStart() && (start+length) <= possibleGene.getStop() ){
+                    SImpleRead spl = new SImpleRead(start,MZ);
+                    possibleGene.addRead(spl);
+                }
+
+
             }
         }
 
